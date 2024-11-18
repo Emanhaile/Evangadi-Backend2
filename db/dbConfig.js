@@ -9,7 +9,7 @@ const dbConnection = mysql2.createPool({
     connectionLimit: 10
 })
 let users = `CREATE TABLE if not exists users(
-        userid int(20) not null auto_increment,
+        userid int(20) not null PRIMARY_KEY auto_increment,
         username varchar(100) not null UNIQUE,
         firstname varchar(100) not null,
         lastname varchar(255) not null,
