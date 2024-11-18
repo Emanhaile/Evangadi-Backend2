@@ -40,17 +40,15 @@ const questionsTable = `
 `;
 
 // Create `answers` table
-const answersTable = `
-    CREATE TABLE IF NOT EXISTS answers (
-        answerid INT(30) AUTO_INCREMENT,
-        userid INT(20) NOT NULL,
-        questionid VARCHAR(100) NOT NULL,
-        answer VARCHAR(255) NOT NULL,
-        PRIMARY KEY (answerid),
-        FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE,
-        FOREIGN KEY (questionid) REFERENCES questions(questionid) ON DELETE CASCADE
-    )
-`;
+const answers = `CREATE TABLE if not exists answers(
+        answerid int(30) auto_increment,
+        userid int(30) not null,
+        questionid varchar(100) not null,
+        answer varchar(255) not null,
+        PRIMARY KEY(answerid),
+        FOREIGN KEY (userid) REFERENCES users(userid),
+        FOREIGN KEY (questionid) REFERENCES questions(questionid)
+    )`;
 
 // Execute table creation
 const createTables = async () => {
@@ -62,7 +60,7 @@ const createTables = async () => {
         await db.query(questionsTable);
         console.log("`questions` table created");
 
-        await db.query(answersTable);
+        await db.query(answers);
         console.log("`answers` table created");
     } catch (error) {
         console.error("Error creating tables:", error);
