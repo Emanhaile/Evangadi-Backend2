@@ -8,7 +8,14 @@ const dbConnection = mysql2.createPool({
     password: process.env.PASSWORD,
     connectionLimit: 10
 })
-
+let users = `CREATE TABLE if not exists users(
+        userid int(20) not null auto_increment,
+        username varchar(100) not null UNIQUE,
+        firstname varchar(100) not null,
+        lastname varchar(255) not null,
+        email varchar(255) not null UNIQUE,
+        password varchar(255) not null
+    )`;
 let questions = `CREATE TABLE if not exists questions(
         id int(20) not null auto_increment,
         questionid varchar(100) not null UNIQUE,
@@ -29,6 +36,13 @@ let answers = `CREATE TABLE if not exists answers(
         FOREIGN KEY (userid) REFERENCES users(userid),
         FOREIGN KEY (questionid) REFERENCES questions(questionid)
     )`;
+    dbConnection.query(users, (err, res) => {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log("users table created");
+        }
+    });
 
     dbConnection.query(questions, (err, res) => {
         if(err) {
